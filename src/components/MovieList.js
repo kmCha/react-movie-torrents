@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Pagination } from 'antd'
+import { Card, Pagination, Drawer, Button } from 'antd'
 
 import '../css/components/MovieList.less'
 
@@ -14,8 +14,17 @@ export default class MovieList extends React.Component {
     this.state = {
       movieList: [],
       totalCount: 1,
-      currPage: 1
+      currPage: 1,
+      detailVisible: false,
+      currDownloadList: []
     }
+  }
+
+  openMovieDetail(list) {
+    this.setState({
+      currDownloadList: list,
+      detailVisible: true
+    })
   }
 
   handlePageChange(page) {
@@ -65,7 +74,7 @@ export default class MovieList extends React.Component {
   }
 
   render () {
-    var { movieList, totalCount } = this.state
+    var { movieList, totalCount, detailVisible, currDownloadList } = this.state
     return (
       <div className="movie-list-wrap">
         {movieList.map(item => {
@@ -74,7 +83,8 @@ export default class MovieList extends React.Component {
                 hoverable
                 style={{width: 240}}
                 key={item._id}
-                cover={<img src={item.coverImg} />}
+                cover={<img src={item.coverImg}
+                onClick={this.openMovieDetail.bind(this, item.downloadList)} />}
           >
             < Meta
               title = {item.title}
@@ -83,6 +93,20 @@ export default class MovieList extends React.Component {
           </Card>)
         })}
         <Pagination className="movie-pagination-wrap" total={totalCount} onChange={this.handlePageChange} />
+        <Drawer
+          title="影片资源"
+          width="800"
+          placement="right"
+          onClose={() => this.setState({detailVisible: false})}
+          visible={detailVisible}>
+          {currDownloadList.map(downloadItem => {
+            return (
+              <p className="movie-download-item" key={downloadItem.href}>
+                <a href={downloadItem.href} target="_blank">{downloadItem.title}</a>
+              </p>
+            )
+          })}
+        </Drawer>
       </div>
     )
   }

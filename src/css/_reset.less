@@ -1,0 +1,366 @@
+@charset "utf-8";
+/* CSS Document */
+html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0;}
+body{padding:0; margin:0;}
+html,body,fieldset,img,iframe,abbr{border:0;}
+li{list-style:none;}
+textarea{overflow:auto;resize:none;}
+input{
+    outline: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+a,button{cursor:pointer;}
+h1,h2,h3,h4,h5,h6,em,strong,b{font-weight:normal; font-style: normal;}
+a,a:hover{text-decoration:none;}
+body,textarea,input,button{
+    color:#62a1c9;
+}
+
+html,body{
+    width:100%;
+    min-height: 930px;
+    height: auto;
+}
+
+@weiff: "\5FAE\8F6F\96C5\9ED1","Microsoft YaHei";
+@heiff: "\9ED1\4F53","黑体";
+@songff: "\5B8B\4F53","宋体";
+@placehColor: #454545;
+@fontColor: #fff;
+ ::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: @placehColor;
+}
+ :-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: @placehColor;
+}
+ ::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: @placehColor;
+}
+ :-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: @placehColor;
+}
+/*宽度限制板块*/
+.wbox {
+    width: 1200px;
+    margin: 0 auto;
+    clear: both;
+}
+.wbox:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.wbox {
+    display: inline-block;
+}
+/* Hides from IE-mac \*/
+* html .wbox {
+    zoom: 1;
+}
+.wbox {
+    display: block;
+    position: relative;
+}
+/* End hide from IE-mac */
+body {
+    width: 100%;
+    min-width: 1200px;
+}
+input,textarea,a,div,button,select{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+}
+select{
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+}
+
+.hide{
+    display: none;
+}
+.text-shadow (@string: 0 1px 3px rgba(0, 0, 0, 0.25)) {
+    text-shadow: @string;
+}
+.box-shadow (@string) {
+    -webkit-box-shadow: @string;
+    -moz-box-shadow:    @string;
+    box-shadow:         @string;
+}
+.drop-shadow (@x: 0, @y: 1px, @blur: 2px, @spread: 0, @alpha: 0.25) {
+    -webkit-box-shadow: @x @y @blur @spread rgba(0, 0, 0, @alpha);
+    -moz-box-shadow:    @x @y @blur @spread rgba(0, 0, 0, @alpha);
+    box-shadow:     @x @y @blur @spread rgba(0, 0, 0, @alpha);
+}
+.inner-shadow (@x: 0, @y: 1px, @blur: 2px, @spread: 0, @alpha: 0.25) {
+    -webkit-box-shadow: inset @x @y @blur @spread rgba(0, 0, 0, @alpha);
+    -moz-box-shadow:    inset @x @y @blur @spread rgba(0, 0, 0, @alpha);
+    box-shadow:         inset @x @y @blur @spread rgba(0, 0, 0, @alpha);
+}
+
+.box-sizing (@type: border-box) {
+    -webkit-box-sizing: @type;
+    -moz-box-sizing:    @type;
+    box-sizing:         @type;
+}
+.border-radius (@radius: 5px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius:    @radius;
+    border-radius:         @radius;
+
+    -moz-background-clip:    padding;
+    -webkit-background-clip: padding-box;
+    background-clip:         padding-box;
+}
+.border-radiuses (@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0) {
+    -webkit-border-top-right-radius:    @topright;
+    -webkit-border-bottom-right-radius: @bottomright;
+    -webkit-border-bottom-left-radius:  @bottomleft;
+    -webkit-border-top-left-radius:     @topleft;
+
+    -moz-border-radius-topright:        @topright;
+    -moz-border-radius-bottomright:     @bottomright;
+    -moz-border-radius-bottomleft:      @bottomleft;
+    -moz-border-radius-topleft:         @topleft;
+
+    border-top-right-radius:            @topright;
+    border-bottom-right-radius:         @bottomright;
+    border-bottom-left-radius:          @bottomleft;
+    border-top-left-radius:             @topleft;
+
+    -moz-background-clip:    padding; 
+    -webkit-background-clip: padding-box; 
+    background-clip:         padding-box; 
+}
+
+.opacity (@opacity: 0.5) {
+    @tempOpacity: @opacity * 100;
+    -webkit-opacity:    @opacity;
+    -moz-opacity:       @opacity;
+    opacity:        @opacity;
+    filter:alpha(opacity=@tempOpacity);
+}
+
+.gradient (@startColor: #eee, @endColor: white) {
+    background-color: @startColor;
+    background: -webkit-gradient(linear, left top, left bottom, from(@startColor), to(@endColor));
+    background: -webkit-linear-gradient(top, @startColor, @endColor);
+    background: -moz-linear-gradient(top, @startColor, @endColor);
+    background: -ms-linear-gradient(top, @startColor, @endColor);
+    background: -o-linear-gradient(top, @startColor, @endColor);
+}
+
+.horizontal-gradient (@startColor: #eee, @endColor: white) {
+    background-color: @startColor;
+    background-image: -webkit-gradient(linear, left top, right top, from(@startColor), to(@endColor));
+    background-image: -webkit-linear-gradient(left, @startColor, @endColor);
+    background-image: -moz-linear-gradient(left, @startColor, @endColor);
+    background-image: -ms-linear-gradient(left, @startColor, @endColor);
+    background-image: -o-linear-gradient(left, @startColor, @endColor);
+    background-image: linear-gradient(left, @startColor, @endColor);
+}
+
+.animation (@name, @duration: 300ms, @delay: 0, @ease: ease) {
+    -webkit-animation: @name @duration @delay @ease;
+    -moz-animation:    @name @duration @delay @ease;
+    -ms-animation:     @name @duration @delay @ease;
+    animation:         @name @duration @delay @ease;
+}
+
+.transition (@transition) {
+    -webkit-transition: @transition;  
+    -moz-transition:    @transition;
+    -ms-transition:     @transition; 
+    -o-transition:      @transition;
+    transition:        @transition;
+}
+.transform(@string){
+    -webkit-transform: @string;
+    -moz-transform:      @string;
+    -ms-transform:       @string;
+    -o-transform:        @string;
+    transform:           @string;
+}
+.scale (@factor) {
+    -webkit-transform: scale(@factor);
+    -moz-transform:      scale(@factor);
+    -ms-transform:       scale(@factor);
+    -o-transform:        scale(@factor);
+    transform:           scale(@factor);
+}
+.rotate (@deg) {
+    -webkit-transform: rotate(@deg);
+    -moz-transform:      rotate(@deg);
+    -ms-transform:       rotate(@deg);
+    -o-transform:        rotate(@deg);
+    transform:           rotate(@deg);
+}
+.skew (@deg, @deg2) {
+    -webkit-transform:       skew(@deg, @deg2);
+    -moz-transform:      skew(@deg, @deg2);
+    -ms-transform:       skew(@deg, @deg2);
+    -o-transform:        skew(@deg, @deg2);
+    transform:           skew(@deg, @deg2);
+}
+.translate (@x, @y:0) {
+    -webkit-transform:       translate(@x, @y);
+    -moz-transform:      translate(@x, @y);
+    -ms-transform:       translate(@x, @y);
+    -o-transform:        translate(@x, @y);
+    transform:           translate(@x, @y);
+}
+.translate3d (@x, @y: 0, @z: 0) {
+    -webkit-transform:       translate3d(@x, @y, @z);
+    -moz-transform:      translate3d(@x, @y, @z);
+    -ms-transform:       translate3d(@x, @y, @z);
+    -o-transform:        translate3d(@x, @y, @z);
+    transform:           translate3d(@x, @y, @z);
+}
+.perspective (@value: 1000) {
+    -webkit-perspective:    @value;
+    -moz-perspective:   @value;
+    -ms-perspective:    @value;
+    perspective:        @value;
+}
+.transform-origin (@x:center, @y:center) {
+    -webkit-transform-origin: @x @y;
+    -moz-transform-origin:    @x @y;
+    -ms-transform-origin:     @x @y;
+    -o-transform-origin:      @x @y;
+    transform-origin:         @x @y;
+}
+.transform-style (@x:preserve-3d) {
+    -webkit-transform-style: @x;
+    -moz-transform-style:    @x;
+    -ms-transform-style:     @x;
+    -o-transform-style:      @x;
+    transform-style:     @x;
+}
+
+.keyframes(@name, @frames) {
+    @-webkit-keyframes @name { @frames(); }
+    @-moz-keyframes @name { @frames(); }
+    @-ms-keyframes @name { @frames(); }
+    @-o-keyframes @name { @frames(); }
+    @keyframes @name { @frames(); }
+}
+
+.animation(@arg){
+    -moz-animation:@arg;
+    -webkit-animation:@arg;
+    -o-animation:@arg;
+    -ms-animation:@arg;
+    animation:@arg;
+}
+//display: -webkit-box;    /*容器为旧伸缩盒,显示成盒子模式*/
+//-webkit-box-align: center; /*设置旧伸缩盒对齐方式,垂直居中*/
+//-webkit-box-pack:center;   /*设置旧伸缩盒对齐方式,水平居中*/
+
+//display: flex;/*容器为伸缩盒*/
+//justify-content: center;/*水平居中*/
+//align-items: center;  /*垂直居中*/
+.box(){
+    display: block;
+    display:-webkit-box;
+    display:-moz-box;
+    display: -ms-flexbox;
+    -ms-flex-wrap:none;
+    display:flex;
+}
+.box-align-center(){
+    .box-align(center);
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+}
+.box-pack-center(){
+    .box-pack(center);
+    -webkit-justify-content:center;
+    -ms-justify-content:center;
+    justify-content:center;
+}
+//.box() {
+//  display: -webkit-box;
+//  display: -moz-box;
+//  display: box;
+//}
+.flex(){
+    display: -webkit-flex;
+    display: flex;
+}
+.box-align(@arg) {
+    -webkit-box-align: @arg;
+    -moz-box-align: @arg;
+    box-align: @arg;
+}
+.box-pack(@arg) {
+    -webkit-box-pack: @arg;
+    -moz-box-pack: @arg;
+    box-pack: @arg;
+}
+.box-orient(@arg) {
+    -webkit-box-orient: @arg;
+    -moz-box-orient: @arg;
+    box-orient: @arg;
+}
+.box-flex(@arg) {
+    -moz-box-flex: @arg;
+    -webkit-box-flex: @arg;
+    box-flex: @arg;
+}
+.flex-container() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.flex-item(@grow: 0) {
+    -webkit-box-flex: @grow;
+    // OLD - iOS 6-, Safari 3.1-6
+    -moz-box-flex: @grow;
+    // OLD - Firefox 19- 
+    -ms-flex: @grow;
+    // IE 10 
+    -webkit-flex: @grow;
+    flex: @grow;
+}
+.align_center(@display,@float,@fsize){
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    *display: @display;
+    *float: @float;
+    *font-size: @fsize;
+    *font-family:Arial;
+}
+// 文本溢出省略号
+/**** DEMO单行
+.text-overflow-ellipsis(1);
+多行
+ .text-overflow-ellipsis(2);
+****/
+.text-overflow-ellipsis(@line) when(@line=1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.text-overflow-ellipsis(@line) when(@line>1) {
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: @line;
+    word-break: break-all;
+}

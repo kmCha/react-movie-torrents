@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Pagination, Drawer, Button } from 'antd'
+import { Card, Pagination, Drawer } from 'antd'
 
 import '../css/components/MovieList.less'
 
@@ -20,16 +20,23 @@ export default class MovieList extends React.Component {
     }
   }
 
-  openMovieDetail(list) {
-    this.setState({
-      currDownloadList: list,
-      detailVisible: true
-    })
+  componentDidMount() {
+    this.getMovieCount(this.props.currTag)
+    this.getMovies(this.state.currPage, this.props.currTag)
   }
 
-  handlePageChange(page) {
+  componentWillReceiveProps (nextProps) {
+    this.setState({
+      currPage: 1
+    })
+    this.getMovieCount(nextProps.currTag)
+    this.getMovies(1, nextProps.currTag)
+  }
+
+  getMovies(page, tag) {
     getMovieList({
-      page: page
+      page,
+      tag
     }).then(res => {
       var {
         code,
@@ -44,8 +51,10 @@ export default class MovieList extends React.Component {
     })
   }
 
-  componentDidMount() {
-    getTotalCount().then(res => {
+  getMovieCount(tag) {
+    getTotalCount({
+      tag
+    }).then(res => {
       var {
         code,
         body
@@ -57,20 +66,20 @@ export default class MovieList extends React.Component {
         })
       }
     })
-    getMovieList({
-      page: this.state.currPage
-    }).then(res => {
-      var {
-        code,
-        body
-      } = res.data
+  }
 
-      if (code === 1) {
-        this.setState({
-          movieList: body
-        })
-      }
+  openMovieDetail(list) {
+    this.setState({
+      currDownloadList: list,
+      detailVisible: true
     })
+  }
+
+  handlePageChange(page) {
+    this.setState({
+      currPage: page
+    })
+    this.getMovies(page, this.props.currTag)
   }
 
   render () {
@@ -92,7 +101,7 @@ export default class MovieList extends React.Component {
             />
           </Card>)
         })}
-        <Pagination className="movie-pagination-wrap" total={totalCount} onChange={this.handlePageChange} />
+        <Pagination className="movie-pagination-wrap" current={this.state.currPage} total={totalCount} onChange={this.handlePageChange} />
         <Drawer
           title="影片资源"
           width="800"

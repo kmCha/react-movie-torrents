@@ -5,14 +5,23 @@ var instance = axios.create({
   withCredentials: true
 })
 
-export async function getMovieList({ page }) {
+export async function getMovieList({ page, tag }) {
   return await instance.get('/movies', {
     params: {
-      page: page
+      page,
+      tag
     }
   })
 }
 
-export async function getTotalCount() {
-  return await instance.get('/totalcount')
+export async function getTotalCount({ tag }) {
+  return await instance.get('/totalcount', {
+    params: {
+      tag
+    }
+  })
+}
+
+export async function getTagList() {
+  return await instance.get('/taglist')
 }

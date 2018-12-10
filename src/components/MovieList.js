@@ -99,6 +99,7 @@ export default class MovieList extends React.Component {
               title = {item.title}
               description = {`豆瓣评分：${item.doubanScore.toFixed(1) || '无'}`}
             />
+            <p className="categories">{`分类：${item.tags ? item.tags.join(',') : '无'}`}</p>
           </Card>)
         })}
         <Pagination className="movie-pagination-wrap" current={this.state.currPage} total={totalCount} onChange={this.handlePageChange} />

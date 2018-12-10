@@ -19,6 +19,8 @@ class TagList extends React.PureComponent {
         body
       } = res.data
 
+      body.sort((a, b) => a.name.length - b.name.length)
+
       if (code === 1) {
         this.setState({
           tagList: body

@@ -85,6 +85,7 @@ export default class MovieList extends React.Component {
   }
 
   openMovieDetail(list) {
+    console.log('clicl')
     this.setState({
       currDownloadList: list,
       detailVisible: true
@@ -116,6 +117,7 @@ export default class MovieList extends React.Component {
                 onClick={this.openMovieDetail.bind(this, item.downloadList)} />}
           >
             < Meta
+              onClick={this.openMovieDetail.bind(this, item.downloadList)}
               title = {item.title}
               description = {`豆瓣评分：${item.doubanScore.toFixed(1) || '无'}`}
             />

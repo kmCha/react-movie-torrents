@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Input } from 'antd'
+import { Layout, Input, Divider } from 'antd'
 import MovieList from '../components/MovieList'
 import TagList from '../components/TagList'
 
@@ -52,22 +52,25 @@ class App extends React.Component {
   render () {
     return (
       <Layout>
-        <Header>
-          <Search
-            placeholder="输入电影标题"
-            onSearch={this.onSearch}
-            enterButton
-          />
+        <Header className="app-header">
+          <h1>KMovies</h1>
         </Header>
         <Layout>
-          <Sider>
+          <Sider className="app-side-bar">
+            <Divider>搜索</Divider>
+            <Search
+              placeholder="输入电影标题"
+              onSearch={this.onSearch}
+              enterButton
+            />
+            <Divider>标签</Divider>
+            <TagList {...this.state} onTagSelected={this.onTagSelected}></TagList>
           </Sider>
           <Content>
-            <TagList {...this.state} onTagSelected={this.onTagSelected}></TagList>
             <MovieList {...this.state}></MovieList>
           </Content>
         </Layout>
-        <Footer>Footer</Footer>
+        <Footer className="app-footer">Crafted By MAIUXI.CHA @2018</Footer>
       </Layout>
     )
   }

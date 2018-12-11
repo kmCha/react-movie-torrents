@@ -34,7 +34,7 @@ class TagList extends React.PureComponent {
     return (
       <div className="tag-list-wrap">
         {
-          tagList.map(tag => {
+          tagList.filter(tag => tag.name.length <= 5).map(tag => {
             return (
               <Tag
                 className={{active: this.props.currTag.split(',').indexOf(tag.name) >= 0}}

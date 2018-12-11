@@ -41,7 +41,10 @@ const config = merge.smart(baseConfig, {
           {
             loader: 'less-loader',
             options: {
-              javascriptEnabled: true
+              javascriptEnabled: true,
+              modifyVars: {
+                'layout-header-background': '#f0f2f5'
+              }
             }
           }
         ]

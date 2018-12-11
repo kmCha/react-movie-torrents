@@ -1,17 +1,34 @@
 import React from 'react'
-import { Layout } from 'antd'
+import { Layout, Input } from 'antd'
 import MovieList from '../components/MovieList'
 import TagList from '../components/TagList'
 
+const Search = Input.Search
 const { Header, Footer, Sider, Content } = Layout
 
 class App extends React.Component {
   constructor (props) {
     super(props)
     this.onTagSelected = this.onTagSelected.bind(this)
+    this.onSearch = this.onSearch.bind(this)
     this.state = {
-      currTag: ''
+      currTag: '',
+      currSearch: ''
     }
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    if (nextState.currTag !== this.state.currTag || nextState.currSearch !== this.state.currSearch) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  onSearch(value) {
+    this.setState({
+      currSearch: value
+    })
   }
 
   onTagSelected(tagName) {
@@ -35,13 +52,19 @@ class App extends React.Component {
   render () {
     return (
       <Layout>
-        <Header>Header</Header>
+        <Header>
+          <Search
+            placeholder="输入电影标题"
+            onSearch={this.onSearch}
+            enterButton
+          />
+        </Header>
         <Layout>
           <Sider>
           </Sider>
           <Content>
-            <TagList currTag={this.state.currTag} onTagSelected={this.onTagSelected}></TagList>
-            <MovieList currTag={this.state.currTag}></MovieList>
+            <TagList {...this.state} onTagSelected={this.onTagSelected}></TagList>
+            <MovieList {...this.state}></MovieList>
           </Content>
         </Layout>
         <Footer>Footer</Footer>

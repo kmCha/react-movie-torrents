@@ -21,22 +21,37 @@ export default class MovieList extends React.Component {
   }
 
   componentDidMount() {
-    this.getMovieCount(this.props.currTag)
-    this.getMovies(this.state.currPage, this.props.currTag)
+    this.getMovieCount({
+      tag: this.props.currTag,
+      search: this.props.currSearch
+    })
+    this.getMovies({
+      page: this.state.currPage,
+      tag: this.props.currTag,
+      search: this.props.currSearch
+    })
   }
 
   componentWillReceiveProps (nextProps) {
     this.setState({
       currPage: 1
     })
-    this.getMovieCount(nextProps.currTag)
-    this.getMovies(1, nextProps.currTag)
+    this.getMovieCount({
+      tag: nextProps.currTag,
+      search: nextProps.currSearch
+    })
+    this.getMovies({
+      page: 1,
+      tag: nextProps.currTag,
+      search: nextProps.currSearch
+    })
   }
 
-  getMovies(page, tag) {
+  getMovies({ page, tag, search }) {
     getMovieList({
       page,
-      tag
+      tag,
+      search
     }).then(res => {
       var {
         code,
@@ -51,9 +66,10 @@ export default class MovieList extends React.Component {
     })
   }
 
-  getMovieCount(tag) {
+  getMovieCount({ tag, search }) {
     getTotalCount({
-      tag
+      tag,
+      search
     }).then(res => {
       var {
         code,
@@ -79,7 +95,11 @@ export default class MovieList extends React.Component {
     this.setState({
       currPage: page
     })
-    this.getMovies(page, this.props.currTag)
+    this.getMovies({
+      page,
+      tag: this.props.currTag,
+      search: this.props.currSearch
+    })
   }
 
   render () {
@@ -109,9 +129,9 @@ export default class MovieList extends React.Component {
           placement="right"
           onClose={() => this.setState({detailVisible: false})}
           visible={detailVisible}>
-          {currDownloadList.map(downloadItem => {
+          {currDownloadList.map((downloadItem, index) => {
             return (
-              <p className="movie-download-item" key={downloadItem.href}>
+              <p className="movie-download-item" key={index}>
                 <a href={downloadItem.href} target="_blank">{downloadItem.title}</a>
               </p>
             )

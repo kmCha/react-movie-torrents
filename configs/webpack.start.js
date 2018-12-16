@@ -1,11 +1,9 @@
 /*
  *  本地开发环境使用的配置
  */
-const paramConfig = require('./webpack.params');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.base');
-const os = require("os")
 const path = require('path');
 
 //loader
@@ -45,18 +43,6 @@ const config = merge.smart(baseConfig, {
               modifyVars: {
                 'layout-header-background': '#f0f2f5'
               }
-            }
-          }
-        ]
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-include-loader',
-            options: {
-              host: paramConfig.include_host,
-              encode: paramConfig.encode
             }
           }
         ]

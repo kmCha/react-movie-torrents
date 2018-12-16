@@ -36,18 +36,21 @@
     "mini-css-extract-plugin": "^0.4.0",
     "raw-loader": "^0.5.1",
     "replace-text-loader": "^0.2.1",
+    "shelljs": "^0.8.3",
     "sprites-loader": "^0.7.1",
     "style-loader": "^0.20.3",
     "url-loader": "^1.0.1",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
-    "webpack-merge": "^4.1.2"
+    "webpack-merge": "^4.1.2",
+    "yargs": "^12.0.5"
   },
   "scripts": {
     "dist": "webpack --mode production --config-name dist",
     "release": "webpack --mode production --config-name release",
-    "start": "webpack-dev-server --mode development"
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack --mode production --config-name release && node ./configs/transferToGithub.js"
   },
   "standard": {
     "ignore": [

@@ -2,22 +2,20 @@
  *  基础配置，即多个文件中共享的配置
  */
 
-const paramConfig = require('./webpack.params');
-
 const path = require('path');
 
-const glob = require(paramConfig.require_path + 'glob');
+const glob = require('glob');
 
 const fs = require('fs');
 const os = require("os");
 
-const webpack = require(paramConfig.require_path + 'webpack');
-const HappyPack = require(paramConfig.require_path + "happypack");
+const webpack = require('webpack');
+const HappyPack = require("happypack");
 const happyThreadPool = HappyPack.ThreadPool({
   size: os.cpus().length
 });
-const HtmlWebpackPlugin = require(paramConfig.require_path + 'html-webpack-plugin');
-const CleanWebpackPlugin = require(paramConfig.require_path + 'clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 function getEntry(globPath) {
   //获取globPath路径下的所有文件

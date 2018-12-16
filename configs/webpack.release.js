@@ -4,15 +4,15 @@
 const paramConfig = require('./webpack.params');
 const path = require('path');
 const os = require("os");
-const HappyPack = require(paramConfig.require_path+"happypack");
+const HappyPack = require("happypack");
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
-const webpack = require(paramConfig.require_path+'webpack');
-const merge = require(paramConfig.require_path+'webpack-merge');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
 const baseConfig = require('./webpack.base');
 
 //webpack 4.x 版本运行时，mode 为 production 即会启动压缩 JS 代码的插件
 
-const MiniCssExtractPlugin = require(paramConfig.require_path+"mini-css-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const config = merge.smart(baseConfig, {
 	output: {
 		path: path.resolve(__dirname, '../release'),
@@ -78,7 +78,15 @@ const config = merge.smart(baseConfig, {
             }
           },
           'sprites-loader',
-          'less-loader'
+          {
+          	loader: 'less-loader',
+          	options: {
+          		javascriptEnabled: true,
+          		modifyVars: {
+          			'layout-header-background': '#f0f2f5'
+          		}
+          	}
+          }
         ]
 			}
 		]

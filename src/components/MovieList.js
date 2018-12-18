@@ -85,7 +85,6 @@ export default class MovieList extends React.Component {
   }
 
   openMovieDetail(list) {
-    console.log('clicl')
     this.setState({
       currDownloadList: list,
       detailVisible: true

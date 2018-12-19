@@ -1,5 +1,19 @@
+@import "../_mixin.less";
+
 .movie-list-wrap {
   position: relative;
+  .loading-wrap {
+    position: absolute;
+    .flex();
+    .align-items(center);
+    .justify-content(center);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+    z-index: 2;;
+  }
   .movie-item-card {
     display: inline-block;
     margin: 10px 28px;

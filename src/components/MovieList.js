@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Pagination, Drawer } from 'antd'
+import { Card, Pagination, Drawer, Spin } from 'antd'
 
 import '../css/components/MovieList.less'
 
@@ -16,19 +16,26 @@ export default class MovieList extends React.Component {
       totalCount: 1,
       currPage: 1,
       detailVisible: false,
-      currDownloadList: []
+      currDownloadList: [],
+      loading: true
     }
   }
 
   componentDidMount() {
-    this.getMovieCount({
-      tag: this.props.currTag,
-      search: this.props.currSearch
-    })
-    this.getMovies({
-      page: this.state.currPage,
-      tag: this.props.currTag,
-      search: this.props.currSearch
+    Promise.all([
+      this.getMovieCount({
+        tag: this.props.currTag,
+        search: this.props.currSearch
+      }),
+      this.getMovies({
+        page: this.state.currPage,
+        tag: this.props.currTag,
+        search: this.props.currSearch
+      })
+    ]).then(() => {
+      this.setState({
+        loading: false
+      })
     })
   }
 
@@ -48,7 +55,7 @@ export default class MovieList extends React.Component {
   }
 
   getMovies({ page, tag, search }) {
-    getMovieList({
+    return getMovieList({
       page,
       tag,
       search
@@ -67,7 +74,7 @@ export default class MovieList extends React.Component {
   }
 
   getMovieCount({ tag, search }) {
-    getTotalCount({
+    return getTotalCount({
       tag,
       search
     }).then(res => {
@@ -93,19 +100,31 @@ export default class MovieList extends React.Component {
 
   handlePageChange(page) {
     this.setState({
-      currPage: page
+      currPage: page,
+      loading: true
     })
     this.getMovies({
       page,
       tag: this.props.currTag,
       search: this.props.currSearch
+    }).then(() => {
+      this.setState({
+        loading: false
+      })
     })
   }
 
   render () {
-    var { movieList, totalCount, detailVisible, currDownloadList } = this.state
+    var { movieList, totalCount, detailVisible, currDownloadList, loading } = this.state
+    var loadingWrap = null
+    if (loading) {
+      loadingWrap = <div className="loading-wrap">
+        <Spin />
+      </div>
+    }
     return (
       <div className="movie-list-wrap">
+        {loadingWrap}
         {movieList.map(item => {
           return (
           <Card className="movie-item-card"

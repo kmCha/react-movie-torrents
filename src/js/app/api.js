@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-var apiHost = 'http://35.234.3.252:3000'
+var apiHost = 'http://35.189.151.61:3000'
 
 if (__DEBUG) {
   apiHost = 'http://localhost:3000'

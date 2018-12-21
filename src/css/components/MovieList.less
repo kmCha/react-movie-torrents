@@ -22,6 +22,14 @@
     .ant-card-cover {
       height: 360px;
       overflow: hidden;
+      &:hover {
+        img {
+          .transform(scale(1.05));
+        }
+      }
+      img {
+        .transition(transform .3s);
+      }
     }
     .ant-card-meta-description {
       margin-bottom: 8px;

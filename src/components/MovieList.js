@@ -5,18 +5,21 @@ import '../css/components/MovieList.less'
 
 import { getMovieList, getTotalCount } from '../js/app/api'
 
+import MovieDetail from './MovieDetail'
+
 const { Meta } = Card
 
 export default class MovieList extends React.Component {
   constructor (props) {
     super(props)
     this.handlePageChange = this.handlePageChange.bind(this)
+    this.onDetailClose = this.onDetailClose.bind(this)
     this.state = {
       movieList: [],
       totalCount: 1,
       currPage: 1,
       detailVisible: false,
-      currDownloadList: [],
+      currDetailItem: [],
       loading: true
     }
   }
@@ -41,16 +44,29 @@ export default class MovieList extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     this.setState({
-      currPage: 1
+      currPage: 1,
+      loading: true
     })
-    this.getMovieCount({
-      tag: nextProps.currTag,
-      search: nextProps.currSearch
+    Promise.all([
+      this.getMovieCount({
+        tag: nextProps.currTag,
+        search: nextProps.currSearch
+      }),
+      this.getMovies({
+        page: 1,
+        tag: nextProps.currTag,
+        search: nextProps.currSearch
+      })
+    ]).then(() => {
+      this.setState({
+        loading: false
+      })
     })
-    this.getMovies({
-      page: 1,
-      tag: nextProps.currTag,
-      search: nextProps.currSearch
+  }
+
+  onDetailClose () {
+    this.setState({
+      detailVisible: false
     })
   }
 
@@ -91,9 +107,9 @@ export default class MovieList extends React.Component {
     })
   }
 
-  openMovieDetail(list) {
+  openMovieDetail(item) {
     this.setState({
-      currDownloadList: list,
+      currDetailItem: item,
       detailVisible: true
     })
   }
@@ -115,12 +131,16 @@ export default class MovieList extends React.Component {
   }
 
   render () {
-    var { movieList, totalCount, detailVisible, currDownloadList, loading } = this.state
+    var { movieList, totalCount, detailVisible, currDetailItem, loading } = this.state
     var loadingWrap = null
+    var movieDetail = null
     if (loading) {
       loadingWrap = <div className="loading-wrap">
         <Spin />
       </div>
+    }
+    if (detailVisible) {
+      movieDetail = <MovieDetail item={currDetailItem} visible={detailVisible} onDetailClose={this.onDetailClose} />
     }
     return (
       <div className="movie-list-wrap">
@@ -132,7 +152,7 @@ export default class MovieList extends React.Component {
                 style={{width: 240}}
                 key={item._id}
                 cover={<img src={item.coverImg}
-                onClick={this.openMovieDetail.bind(this, item.downloadList)} />}
+                onClick={this.openMovieDetail.bind(this, item)} />}
           >
             < Meta
               onClick={this.openMovieDetail.bind(this, item.downloadList)}
@@ -143,20 +163,7 @@ export default class MovieList extends React.Component {
           </Card>)
         })}
         <Pagination className="movie-pagination-wrap" current={this.state.currPage} total={totalCount} onChange={this.handlePageChange} />
-        <Drawer
-          title="影片资源"
-          width="800"
-          placement="right"
-          onClose={() => this.setState({detailVisible: false})}
-          visible={detailVisible}>
-          {currDownloadList.map((downloadItem, index) => {
-            return (
-              <p className="movie-download-item" key={index}>
-                <a href={downloadItem.href} target="_blank">{downloadItem.title}</a>
-              </p>
-            )
-          })}
-        </Drawer>
+        {movieDetail}
       </div>
     )
   }

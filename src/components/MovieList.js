@@ -155,7 +155,7 @@ export default class MovieList extends React.Component {
                 onClick={this.openMovieDetail.bind(this, item)} />}
           >
             < Meta
-              onClick={this.openMovieDetail.bind(this, item.downloadList)}
+              onClick={this.openMovieDetail.bind(this, item)}
               title = {item.title}
               description = {`豆瓣评分：${item.doubanScore.toFixed(1) || '无'}`}
             />

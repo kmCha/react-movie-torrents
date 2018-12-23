@@ -43,11 +43,11 @@ echo('执行git add .');
 exec('git add .', function (code, stdout, stderr) {
   // 正确执行
   if (code == 0) {
-    echo(stdout);
+    echo('执行git commit -m');
     exec('git commit -m' + argv.m, function (_code, _stdout, _stderr) {
       // 正确commit
       if (_code == 0) {
-        echo(_stdout);
+        echo('执行git push');
         exec('git push', function (__code, __stdout, __stderr) {
           // 正确push
           if (__code == 0) {

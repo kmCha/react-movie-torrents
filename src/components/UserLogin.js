@@ -3,31 +3,52 @@ import {
     getUserInfo,
     apiHost
 } from '../js/app/api'
+import { Icon } from 'antd';
 
 import '../css/components/UserLogin.less'
 
-class TagList extends React.PureComponent {
+class UserLogin extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            loading: true,
             userInfo: null
         }
     }
 
     componentDidMount() {
         getUserInfo().then(res => {
+            if (res.data.code > 0) {
+                this.setState({
+                    userInfo: res.data.body,
+                    loading: false
+                })
+            } else {
+                this.setState({
+                    userInfo: null,
+                    loading: false
+                })
+            }
+        }).catch(e => {
             this.setState({
-                userInfo: res.data.body
+                userInfo: null,
+                loading: false
             })
-
-            console.log(res)
         })
     }
 
     render() {
         var {
-            userInfo
+            userInfo,
+            loading
         } = this.state
+        if (loading) {
+            return (
+                <div className="user-login-wrap">
+                    <Icon type="loading" />
+                </div>
+            )
+        }
         if (userInfo) {
             return (
                 <div className="user-login-wrap">
@@ -49,4 +70,4 @@ class TagList extends React.PureComponent {
     }
 }
 
-export default TagList
+export default UserLogin

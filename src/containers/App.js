@@ -2,6 +2,10 @@ import React from 'react'
 import { Layout, Input, Divider } from 'antd'
 import MovieList from '../components/MovieList'
 import TagList from '../components/TagList'
+import UserLogin from '../components/UserLogin'
+import {
+  getUserInfo
+} from '../js/app/api'
 
 const Search = Input.Search
 const { Header, Footer, Sider, Content } = Layout
@@ -15,6 +19,7 @@ class App extends React.Component {
       currTag: '',
       currSearch: ''
     }
+    getUserInfo()
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -54,6 +59,7 @@ class App extends React.Component {
       <Layout>
         <Header className="app-header">
           <h1>KMovies</h1>
+          <UserLogin></UserLogin>
         </Header>
         <Layout>
           <Sider className="app-side-bar">

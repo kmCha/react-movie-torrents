@@ -11,6 +11,8 @@ var instance = axios.create({
   withCredentials: true
 })
 
+export { apiHost }
+
 export async function getUserInfo() {
   return await instance.get('/info')
 }

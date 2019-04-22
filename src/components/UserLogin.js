@@ -1,6 +1,7 @@
 import React from 'react'
 import {
-    getUserInfo
+    getUserInfo,
+    apiHost
 } from '../js/app/api'
 
 import '../css/components/UserLogin.less'
@@ -39,7 +40,7 @@ class TagList extends React.PureComponent {
         } else {
             return (
                 <div className="user-login-wrap">
-                    <a className="btn-login" href="https://github.com/login/oauth/authorize?client_id=864a78a52abfc910a2c3&redirect_uri=http://localhost:3000/auth/github">
+                    <a className="btn-login" href={`https://github.com/login/oauth/authorize?client_id=864a78a52abfc910a2c3&redirect_uri=${apiHost}/auth/github`}>
                         Login
                     </a>
                 </div>

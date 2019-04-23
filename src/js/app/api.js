@@ -13,6 +13,10 @@ var instance = axios.create({
 
 export { apiHost }
 
+export async function userLogOut() {
+  return await instance.get('/logout')
+}
+
 export async function getUserInfo() {
   return await instance.get('/info')
 }

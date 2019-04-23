@@ -1,9 +1,13 @@
 import React from 'react'
 import {
     getUserInfo,
-    apiHost
+    apiHost,
+    userLogOut
 } from '../js/app/api'
-import { Icon } from 'antd';
+import {
+    Icon,
+    message
+} from 'antd';
 
 import '../css/components/UserLogin.less'
 
@@ -14,6 +18,22 @@ class UserLogin extends React.Component {
             loading: true,
             userInfo: null
         }
+    }
+
+    logOut() {
+        this.setState({
+            ...this.state,
+            loading: true
+        })
+        userLogOut().then(res => {
+            if (res.data.code > 0) {
+                window.location.reload()
+            } else {
+                message.error(res.data.msg)
+            }
+        }).catch(e => {
+            message.error('哦豁，登出失败')
+        })
     }
 
     componentDidMount() {
@@ -56,6 +76,7 @@ class UserLogin extends React.Component {
                         <div className="user-avatar" style={{backgroundImage: `url('${userInfo.avatar_url}')`}}></div>
                         <div className="username">{userInfo.login}</div>
                     </a>
+                    <div className="btn-logout" onClick={this.logOut.bind(this)}>[exit]</div>
                 </div>
             )
         } else {

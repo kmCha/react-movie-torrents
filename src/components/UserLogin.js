@@ -54,7 +54,7 @@ class UserLogin extends React.Component {
                 <div className="user-login-wrap">
                     <a className="userinfo-wrap" href={userInfo.html_url}>
                         <div className="user-avatar" style={{backgroundImage: `url('${userInfo.avatar_url}')`}}></div>
-                        <div className="username">{userInfo.name}</div>
+                        <div className="username">{userInfo.login}</div>
                     </a>
                 </div>
             )

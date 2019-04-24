@@ -16,8 +16,9 @@ class NormalLoginForm extends React.Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
+        const { onChangeForm } = this.props;
         return (
-            <Form onSubmit={this.handleSubmit.bind(this)} className="user-login-form">
+            <Form className="user-login-form">
                 <Form.Item>
                     {getFieldDecorator('userName', {
                         rules: [{ required: true, message: '请输入用户名！' }],
@@ -43,7 +44,7 @@ class NormalLoginForm extends React.Component {
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         登录
                     </Button>
-                    Or <a href="">立即注册</a>
+                    Or <a onClick={() => {onChangeForm('signUp')}} href="javascript: void 0;">立即注册</a>
                 </Form.Item>
             </Form>
         );

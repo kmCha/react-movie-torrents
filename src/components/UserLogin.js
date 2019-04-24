@@ -6,8 +6,10 @@ import {
 } from '../js/app/api'
 import {
     Icon,
-    message
+    message,
+    Modal
 } from 'antd';
+import UserLoginModal from './UserLoginModal'
 
 import '../css/components/UserLogin.less'
 
@@ -16,7 +18,8 @@ class UserLogin extends React.Component {
         super(props)
         this.state = {
             loading: true,
-            userInfo: null
+            userInfo: null,
+            modalVisible: false
         }
     }
 
@@ -34,6 +37,12 @@ class UserLogin extends React.Component {
         }).catch(e => {
             message.error('哦豁，登出失败')
         })
+    }
+
+    setModalVisible(modalVisible) {
+        this.setState({
+            modalVisible
+        });
     }
 
     componentDidMount() {
@@ -62,32 +71,38 @@ class UserLogin extends React.Component {
             userInfo,
             loading
         } = this.state
+
+        var comp = <div className="btn-login" onClick={this.setModalVisible.bind(this, true)}>
+                        登录
+                    </div>
+
         if (loading) {
-            return (
-                <div className="user-login-wrap">
-                    <Icon type="loading" />
-                </div>
-            )
+            comp = <Icon type="loading" />;
+        } else if (userInfo) {
+            comp = <div>
+                <a className="userinfo-wrap" href={userInfo.html_url}>
+                    <div className="user-avatar" style={{backgroundImage: `url('${userInfo.avatar_url}')`}}></div>
+                    <div className="username">{userInfo.login}</div>
+                </a>
+                <div className="btn-logout" onClick={this.logOut.bind(this)}>[exit]</div>
+            </div>
         }
-        if (userInfo) {
-            return (
-                <div className="user-login-wrap">
-                    <a className="userinfo-wrap" href={userInfo.html_url}>
-                        <div className="user-avatar" style={{backgroundImage: `url('${userInfo.avatar_url}')`}}></div>
-                        <div className="username">{userInfo.login}</div>
-                    </a>
-                    <div className="btn-logout" onClick={this.logOut.bind(this)}>[exit]</div>
-                </div>
-            )
-        } else {
-            return (
-                <div className="user-login-wrap">
-                    <a className="btn-login" href={`https://github.com/login/oauth/authorize?client_id=864a78a52abfc910a2c3&redirect_uri=${apiHost}/auth/github`}>
-                        Login
-                    </a>
-                </div>
-            )
-        }
+
+        return (
+            <div className="user-login-wrap">
+                {comp}
+                <Modal
+                    title="登录/注册"
+                    centered
+                    footer={null}
+                    visible={this.state.modalVisible}
+                    onOk={() => this.setModalVisible(false)}
+                    onCancel={() => this.setModalVisible(false)}
+                    >
+                    <UserLoginModal></UserLoginModal>
+                </Modal>
+            </div>
+        )
     }
 }
 

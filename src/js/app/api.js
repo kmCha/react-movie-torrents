@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-var apiHost = 'http://148.70.52.4:3000'
+var apiHost = '//api.chamajiuxi.com'
 
 if (__DEBUG) {
   apiHost = 'http://localhost:3000'

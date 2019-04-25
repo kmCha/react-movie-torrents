@@ -4,6 +4,8 @@ import {
     Form, Input, Icon, Button
 } from 'antd';
 
+import { encryptPassword } from '../js/app/utils';
+
 import '../css/components/UserSignUpForm.less';
 
 class RegistrationForm extends React.Component {
@@ -19,7 +21,9 @@ class RegistrationForm extends React.Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
+                var { userName, password } = values;
+                var { salt, hash } = encryptPassword(password);
+                console.log(userName, salt, hash);
             }
         });
     }

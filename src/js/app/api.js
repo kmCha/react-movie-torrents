@@ -11,6 +11,16 @@ var instance = axios.create({
   withCredentials: true
 })
 
+export { apiHost }
+
+export async function userLogOut() {
+  return await instance.get('/logout')
+}
+
+export async function getUserInfo() {
+  return await instance.get('/info')
+}
+
 export async function getMovieList({ page, tag, search }) {
   return await instance.get('/movies', {
     params: {

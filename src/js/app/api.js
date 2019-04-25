@@ -3,43 +3,69 @@ import axios from 'axios'
 var apiHost = '//api.chamajiuxi.com'
 
 if (__DEBUG) {
-  apiHost = 'http://localhost:3000'
+    apiHost = 'http://localhost:3000'
 }
 
 var instance = axios.create({
-  baseURL: apiHost,
-  withCredentials: true
+    baseURL: apiHost,
+    withCredentials: true
 })
 
-export { apiHost }
+export {
+    apiHost
+}
 
+export async function userSignUp({
+    userName,
+    salt,
+    hash
+}) {
+    return await instance.post('/signup', {
+        userName,
+        salt,
+        hash
+    })
+}
+
+// 登出
 export async function userLogOut() {
-  return await instance.get('/logout')
+    return await instance.get('/logout')
 }
 
+// 获取用户信息
 export async function getUserInfo() {
-  return await instance.get('/info')
+    return await instance.get('/info')
 }
 
-export async function getMovieList({ page, tag, search }) {
-  return await instance.get('/movies', {
-    params: {
-      page,
-      tag,
-      search
-    }
-  })
+// 获取电影列表
+export async function getMovieList({
+    page,
+    tag,
+    search
+}) {
+    return await instance.get('/movies', {
+        params: {
+            page,
+            tag,
+            search
+        }
+    })
 }
 
-export async function getTotalCount({ tag, search }) {
-  return await instance.get('/totalcount', {
-    params: {
-      tag,
-      search
-    }
-  })
+// 获取电影数量
+export async function getTotalCount({
+    tag,
+    search
+}) {
+    return await instance.get('/totalcount', {
+        params: {
+            tag,
+            search
+        }
+    })
 }
 
+// 获取标签列表
 export async function getTagList() {
-  return await instance.get('/taglist')
+    return await instance.get('/taglist')
 }

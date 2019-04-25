@@ -1,7 +1,9 @@
 import React from 'react'
-
 import {
-    Form, Input, Icon, Button
+    userSignUp
+} from '../js/app/api';
+import {
+    Form, Input, Icon, Button, message
 } from 'antd';
 
 import { encryptPassword } from '../js/app/utils';
@@ -23,7 +25,25 @@ class RegistrationForm extends React.Component {
             if (!err) {
                 var { userName, password } = values;
                 var { salt, hash } = encryptPassword(password);
-                console.log(userName, salt, hash);
+
+                userSignUp({
+                    userName,
+                    salt,
+                    hash
+                }).then(res => {
+                    var { code, msg } = res.data;
+                    if (code === 1) {
+                        message.success(msg);
+                        this.props.onSignUp({
+                            userName,
+                            password
+                        });
+                    } else {
+                        message.error(msg);
+                    }
+                }).catch(e => {
+                    message.error('网络错误，请稍后再试');
+                })
             }
         });
     }
@@ -81,7 +101,12 @@ class RegistrationForm extends React.Component {
             <Form onSubmit={this.handleSubmit.bind(this)} className="user-sign-up-wrap">
                 <Form.Item {...formItemLayout} label="用户名">
                     {getFieldDecorator('userName', {
-                        rules: [{ required: true, message: '请输入用户名！' }],
+                        rules: [
+                            { pattern: /^\w+$/g, message: '用户名只能包含字母、数字、下划线！' },
+                            { required: true, message: '请输入用户名！' },
+                            { min: 5, message: '用户名至少5位！' },
+                            { max: 12, message: '用户名最多12位！' },
+                        ],
                     })(
                         <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
                     )}
@@ -89,7 +114,7 @@ class RegistrationForm extends React.Component {
                 <Form.Item {...formItemLayout} label="密码">
                     {getFieldDecorator('password', {
                         rules: [{
-                            required: true, message: '请输入密码！',
+                            required: true, min: 6, message: '请输入至少6位的密码！',
                         }, {
                             validator: this.validateToNextPassword.bind(this),
                         }],

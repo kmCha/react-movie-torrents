@@ -27,10 +27,12 @@ class UserLoginModal extends React.Component {
         })
     }
 
+    onSignUp(account) {
+        this.changeForm('login')
+    }
+
     render() {
-        var {
-            showForm
-        } = this.state
+        var { showForm } = this.state
 
         var modalContent = <div className="user-login-modal"></div>
 
@@ -49,7 +51,7 @@ class UserLoginModal extends React.Component {
 
         if (showForm === 'signUp') {
             modalContent = <div className="user-login-modal">
-                <UserSignUpForm onChangeForm={this.changeForm.bind(this)}></UserSignUpForm>
+                <UserSignUpForm onChangeForm={this.changeForm.bind(this)} onSignUp={this.onSignUp.bind(this)}></UserSignUpForm>
             </div>
         }
 

@@ -11,11 +11,22 @@ import '../css/components/UserLoginForm.less'
 
 
 class NormalLoginForm extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            loading: false
+        }
+    }
+
     handleSubmit(e) {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 var { userName, password, remember } = values;
+
+                this.setState({
+                    loading: true
+                })
 
                 getUserSalt({
                     userName
@@ -36,14 +47,26 @@ class NormalLoginForm extends React.Component {
                             } else {
                                 message.error(msg);
                             }
+                            this.setState({
+                                loading: false
+                            })
                         }).catch(e => {
                             message.error(networkErrorMsg)
+                            this.setState({
+                                loading: false
+                            })
                         })
                     } else {
                         message.error(msg);
+                        this.setState({
+                            loading: false
+                        })
                     }
                 }).catch(e => {
-                    message.error(networkErrorMsg)
+                    message.error(networkErrorMsg);
+                    this.setState({
+                        loading: false
+                    })
                 })
             }
         });
@@ -52,6 +75,15 @@ class NormalLoginForm extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         const { onChangeForm } = this.props;
+        const { loading } = this.state;
+        var submitBtn = <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.handleSubmit.bind(this)}>
+            登录
+        </Button>;
+        if (loading) {
+            submitBtn = <Button type="primary" disabled className="login-form-button">
+            <Icon type="loading" />
+        </Button>;
+        }
         return (
             <Form className="user-login-form">
                 <Form.Item>
@@ -76,9 +108,7 @@ class NormalLoginForm extends React.Component {
                         <Checkbox>记住本次登录</Checkbox>
                     )}
                     <a className="login-form-forgot" href="">忘记密码？</a>
-                    <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.handleSubmit.bind(this)}>
-                        登录
-                    </Button>
+                    {submitBtn}
                     Or <a onClick={() => {onChangeForm('signUp')}} href="javascript: void 0;">立即注册</a>
                 </Form.Item>
             </Form>

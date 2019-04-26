@@ -19,6 +19,7 @@ class RegistrationForm extends React.Component {
         this.state = {
             confirmDirty: false,
             autoCompleteResult: [],
+            loading: false
         };
     }
 
@@ -28,6 +29,10 @@ class RegistrationForm extends React.Component {
             if (!err) {
                 var { userName, password } = values;
                 var { salt, hash } = encryptPassword(password);
+
+                this.setState({
+                    loading: true
+                })
 
                 userSignUp({
                     userName,
@@ -44,8 +49,14 @@ class RegistrationForm extends React.Component {
                     } else {
                         message.error(msg);
                     }
+                    this.setState({
+                        loading: false
+                    })
                 }).catch(e => {
                     message.error(networkErrorMsg);
+                    this.setState({
+                        loading: false
+                    })
                 })
             }
         });
@@ -76,6 +87,13 @@ class RegistrationForm extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         const { onChangeForm } = this.props;
+        const { loading } = this.state;
+        var submitBtn = <Button type="primary" htmlType="submit">注册</Button>;
+        if (loading) {
+            submitBtn = <Button type="primary" htmlType="submit" disabled>
+                <Icon type="loading" />
+            </Button>;
+        }
 
         const formItemLayout = {
             labelCol: {
@@ -137,7 +155,7 @@ class RegistrationForm extends React.Component {
                     )}
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">注册</Button>
+                    {submitBtn}
                     <a className="btn-login" href="javascript: void 0;" onClick={() => {onChangeForm('login')}}>已有账号，立即登录</a>
                 </Form.Item>
             </Form>

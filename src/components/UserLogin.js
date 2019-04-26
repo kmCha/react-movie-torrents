@@ -91,19 +91,19 @@ class UserLogin extends React.Component {
             comp = <Icon type="loading" />;
         } else if (userInfo) {
             comp = <div>
-                <a className="userInfo-wrap" href="javascript: void 0;">
+                <div className="userInfo-wrap">
                     <div className="user-avatar" style={{backgroundImage: `url(${require('../img/avatar.png')})`}}></div>
-                    <div className="username">{userInfo.userName}</div>
-                </a>
-                <div className="btn-logout" onClick={this.logOut.bind(this)}>登出</div>
+                    <div className="username"><Icon type="user" />{userInfo.userName}</div>
+                </div>
+                <a className="btn-logout" href="javascript: void 0;" onClick={this.logOut.bind(this)}><Icon type="export" />登出</a>
             </div>
         } else if (userInfoGitHub) {
             comp = <div>
                 <a className="userInfo-wrap" href={userInfoGitHub.html_url}>
                     <div className="user-avatar" style={{backgroundImage: `url('${userInfoGitHub.avatar_url}')`}}></div>
-                    <div className="username">{userInfoGitHub.login}</div>
+                    <div className="username"><Icon type="user" />{userInfoGitHub.login}</div>
                 </a>
-                <div className="btn-logout" onClick={this.logOut.bind(this)}>登出</div>
+                <a className="btn-logout" href="javascript: void 0;" onClick={this.logOut.bind(this)}><Icon type="export" />登出</a>
             </div>
         }
 

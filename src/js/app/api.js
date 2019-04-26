@@ -15,6 +15,31 @@ export {
     apiHost
 }
 
+// 获取用户盐
+export async function getUserSalt({
+    userName
+}) {
+    return await instance.get('/salt', {
+        params: {
+            userName
+        }
+    })
+}
+
+// 登录
+export async function userLogin({
+    userName,
+    hash,
+    remember
+}) {
+    return await instance.post('/login', {
+        userName,
+        hash,
+        remember
+    })
+}
+
+// 注册
 export async function userSignUp({
     userName,
     salt,

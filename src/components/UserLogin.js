@@ -16,11 +16,18 @@ import '../css/components/UserLogin.less'
 class UserLogin extends React.Component {
     constructor(props) {
         super(props)
+        this.getUserInfo()
         this.state = {
             loading: true,
             userInfo: null,
+            userInfoGitHub: null,
             modalVisible: false
         }
+    }
+
+    onLoginSuccess() {
+        this.setModalVisible(false);
+        this.getUserInfo()
     }
 
     logOut() {
@@ -45,22 +52,25 @@ class UserLogin extends React.Component {
         });
     }
 
-    componentDidMount() {
+    getUserInfo() {
         getUserInfo().then(res => {
             if (res.data.code > 0) {
                 this.setState({
-                    userInfo: res.data.body,
+                    userInfo: res.data.userInfo,
+                    userInfoGitHub: res.data.userInfoGitHub,
                     loading: false
                 })
             } else {
                 this.setState({
                     userInfo: null,
+                    userInfoGitHub: null,
                     loading: false
                 })
             }
         }).catch(e => {
             this.setState({
                 userInfo: null,
+                userInfoGitHub: null,
                 loading: false
             })
         })
@@ -69,6 +79,7 @@ class UserLogin extends React.Component {
     render() {
         var {
             userInfo,
+            userInfoGitHub,
             loading
         } = this.state
 
@@ -80,11 +91,19 @@ class UserLogin extends React.Component {
             comp = <Icon type="loading" />;
         } else if (userInfo) {
             comp = <div>
-                <a className="userinfo-wrap" href={userInfo.html_url}>
-                    <div className="user-avatar" style={{backgroundImage: `url('${userInfo.avatar_url}')`}}></div>
-                    <div className="username">{userInfo.login}</div>
+                <a className="userInfo-wrap" href="javascript: void 0;">
+                    <div className="user-avatar" style={{backgroundImage: `url(${require('../img/avatar.png')})`}}></div>
+                    <div className="username">{userInfo.userName}</div>
                 </a>
-                <div className="btn-logout" onClick={this.logOut.bind(this)}>[exit]</div>
+                <div className="btn-logout" onClick={this.logOut.bind(this)}>登出</div>
+            </div>
+        } else if (userInfoGitHub) {
+            comp = <div>
+                <a className="userInfo-wrap" href={userInfoGitHub.html_url}>
+                    <div className="user-avatar" style={{backgroundImage: `url('${userInfoGitHub.avatar_url}')`}}></div>
+                    <div className="username">{userInfoGitHub.login}</div>
+                </a>
+                <div className="btn-logout" onClick={this.logOut.bind(this)}>登出</div>
             </div>
         }
 
@@ -99,7 +118,7 @@ class UserLogin extends React.Component {
                     onOk={() => this.setModalVisible(false)}
                     onCancel={() => this.setModalVisible(false)}
                     >
-                    <UserLoginModal></UserLoginModal>
+                    <UserLoginModal onLoginSuccess={this.onLoginSuccess.bind(this)}></UserLoginModal>
                 </Modal>
             </div>
         )

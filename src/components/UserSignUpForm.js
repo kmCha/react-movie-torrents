@@ -6,7 +6,10 @@ import {
     Form, Input, Icon, Button, message
 } from 'antd';
 
-import { encryptPassword } from '../js/app/utils';
+import {
+    encryptPassword,
+    networkErrorMsg
+} from '../js/app/utils';
 
 import '../css/components/UserSignUpForm.less';
 
@@ -42,7 +45,7 @@ class RegistrationForm extends React.Component {
                         message.error(msg);
                     }
                 }).catch(e => {
-                    message.error('网络错误，请稍后再试');
+                    message.error(networkErrorMsg);
                 })
             }
         });

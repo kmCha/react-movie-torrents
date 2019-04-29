@@ -62,6 +62,17 @@ export async function getUserInfo() {
     return await instance.get('/info')
 }
 
+// 获取电影种子列表
+export async function getTorrents({
+    id
+}) {
+    return await instance.get('/torrents', {
+        params: {
+            id
+        }
+    })
+}
+
 // 获取电影列表
 export async function getMovieList({
     page,

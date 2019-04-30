@@ -30,12 +30,14 @@ export async function getUserSalt({
 export async function userLogin({
     userName,
     hash,
-    remember
+    remember,
+    captcha
 }) {
     return await instance.post('/login', {
         userName,
         hash,
-        remember
+        remember,
+        captcha
     })
 }
 

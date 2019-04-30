@@ -1,15 +1,10 @@
 import React from 'react'
-import {
-    userSignUp
-} from '../js/app/api';
+import { userSignUp } from '../js/app/api';
 import {
     Form, Input, Icon, Button, message
 } from 'antd';
-
-import {
-    encryptPassword,
-    networkErrorMsg
-} from '../js/app/utils';
+import { encryptPassword } from '../js/app/utils';
+import { networkErrorMsg } from '../configs';
 
 import '../css/components/UserSignUpForm.less';
 

@@ -2,10 +2,8 @@ import React from 'react'
 import {
     Form, Icon, Input, Button, Checkbox, message
 } from 'antd';
-import {
-    networkErrorMsg,
-    encryptPassword
-} from '../js/app/utils';
+import { encryptPassword } from '../js/app/utils';
+import { networkErrorMsg, txCaptchaId } from '../configs';
 import { getUserSalt, userLogin } from '../js/app/api';
 import '../css/components/UserLoginForm.less'
 
@@ -14,7 +12,8 @@ class NormalLoginForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            loading: false
+            loading: false,
+            captchaPass: false
         }
     }
 
@@ -22,7 +21,7 @@ class NormalLoginForm extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                var { userName, password, remember } = values;
+                var { userName, password, remember, captcha } = values;
 
                 this.setState({
                     loading: true
@@ -38,7 +37,8 @@ class NormalLoginForm extends React.Component {
                         userLogin({
                             userName,
                             hash,
-                            remember
+                            remember,
+                            captcha
                         }).then(res => {
                             var { code, msg } = res.data;
                             if (code === 1) {
@@ -72,10 +72,33 @@ class NormalLoginForm extends React.Component {
         });
     }
 
+    onCaptchaSuccess(res) {
+        // 验证成功
+        if (res.ret === 0) {
+            this.props.form.setFieldsValue({
+                captcha: res
+            })
+            this.setState({
+                captchaPass: true
+            })
+        }
+    }
+
+    componentDidMount() {
+        var element = document.getElementById('captcha');
+        new TencentCaptcha(element, txCaptchaId, this.onCaptchaSuccess.bind(this));
+    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
         const { onChangeForm } = this.props;
-        const { loading } = this.state;
+        const { loading, captchaPass } = this.state;
+
+        var captchaButton = <Button className="ant-input-affix-wrapper" type="primary" ghost><Icon type="safety-certificate" />点击验证</Button>
+        if (captchaPass) {
+            captchaButton = <Button className="ant-input-affix-wrapper" disabled ghost><Icon type="check" />验证通过</Button>;
+        }
+
         var submitBtn = <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.handleSubmit.bind(this)}>
             登录
         </Button>;
@@ -83,6 +106,7 @@ class NormalLoginForm extends React.Component {
             submitBtn = <Button type="primary" disabled className="login-form-button">
             <Icon type="loading" />
         </Button>;
+
         }
         return (
             <Form className="user-login-form">
@@ -98,6 +122,14 @@ class NormalLoginForm extends React.Component {
                         rules: [{ required: true, message: '请输入密码！' }],
                     })(
                         <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />
+                    )}
+                </Form.Item>
+                <Form.Item>
+                    {getFieldDecorator('captcha', {
+                        initialValue: '',
+                        rules: [{ required: true, message: '请完成验证！' }],
+                    })(
+                        captchaButton
                     )}
                 </Form.Item>
                 <Form.Item>

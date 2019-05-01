@@ -148,7 +148,7 @@ class RegistrationForm extends React.Component {
                             { max: 12, message: '用户名最多12位！' },
                         ],
                     })(
-                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
+                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} />
                     )}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="密码">
@@ -159,7 +159,7 @@ class RegistrationForm extends React.Component {
                             validator: this.validateToNextPassword.bind(this),
                         }],
                     })(
-                        <Input type="password" />
+                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" />
                     )}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="确认密码">
@@ -170,7 +170,7 @@ class RegistrationForm extends React.Component {
                             validator: this.compareToFirstPassword.bind(this),
                         }],
                     })(
-                        <Input type="password" onBlur={this.handleConfirmBlur.bind(this)} />
+                        <Input prefix={<Icon type="copy" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" onBlur={this.handleConfirmBlur.bind(this)} />
                     )}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="人机验证">

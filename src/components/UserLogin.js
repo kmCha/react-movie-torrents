@@ -84,7 +84,7 @@ class UserLogin extends React.Component {
         } = this.state
 
         var comp = <div className="btn-login" onClick={this.setModalVisible.bind(this, true)}>
-                        登录
+                        登录/注册
                     </div>
 
         if (loading) {

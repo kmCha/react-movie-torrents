@@ -4,7 +4,7 @@ import {
     Form, Input, Icon, Button, message
 } from 'antd';
 import { encryptPassword } from '../js/app/utils';
-import { networkErrorMsg } from '../configs';
+import { networkErrorMsg, txCaptchaId } from '../configs';
 
 import '../css/components/UserSignUpForm.less';
 
@@ -14,7 +14,8 @@ class RegistrationForm extends React.Component {
         this.state = {
             confirmDirty: false,
             autoCompleteResult: [],
-            loading: false
+            loading: false,
+            captchaPass: false
         };
     }
 
@@ -79,10 +80,33 @@ class RegistrationForm extends React.Component {
         callback();
     }
 
+    onCaptchaSuccess(res) {
+        // 验证成功
+        if (res.ret === 0) {
+            this.props.form.setFieldsValue({
+                captcha: res
+            })
+            this.setState({
+                captchaPass: true
+            })
+        }
+    }
+
+    componentDidMount() {
+        var element = document.getElementById('captcha');
+        new TencentCaptcha(element, txCaptchaId, this.onCaptchaSuccess.bind(this));
+    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
         const { onChangeForm } = this.props;
-        const { loading } = this.state;
+        const { loading, captchaPass } = this.state;
+
+        var captchaButton = <Button className="ant-input-affix-wrapper" type="primary" ghost><Icon type="safety-certificate" />点击验证</Button>
+        if (captchaPass) {
+            captchaButton = <Button className="ant-input-affix-wrapper" disabled ghost><Icon type="check" />验证通过</Button>;
+        }
+
         var submitBtn = <Button type="primary" htmlType="submit">注册</Button>;
         if (loading) {
             submitBtn = <Button type="primary" htmlType="submit" disabled>
@@ -147,6 +171,14 @@ class RegistrationForm extends React.Component {
                         }],
                     })(
                         <Input type="password" onBlur={this.handleConfirmBlur.bind(this)} />
+                    )}
+                </Form.Item>
+                <Form.Item {...formItemLayout} label="人机验证">
+                    {getFieldDecorator('captcha', {
+                        initialValue: '',
+                        rules: [{ required: true, message: '请完成验证！' }],
+                    })(
+                        captchaButton
                     )}
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>

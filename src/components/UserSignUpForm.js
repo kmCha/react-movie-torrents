@@ -93,8 +93,10 @@ class RegistrationForm extends React.Component {
     }
 
     componentDidMount() {
-        var element = document.getElementById('captcha');
-        new TencentCaptcha(element, txCaptchaId, this.onCaptchaSuccess.bind(this));
+        var element = document.getElementById('register_captcha');
+        if (element) {
+            new TencentCaptcha(element, txCaptchaId, this.onCaptchaSuccess.bind(this));
+        }
     }
 
     render() {

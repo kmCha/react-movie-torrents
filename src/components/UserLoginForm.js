@@ -86,7 +86,9 @@ class NormalLoginForm extends React.Component {
 
     componentDidMount() {
         var element = document.getElementById('normal_login_captcha');
-        new TencentCaptcha(element, txCaptchaId, this.onCaptchaSuccess.bind(this));
+        if (element) {
+            new TencentCaptcha(element, txCaptchaId, this.onCaptchaSuccess.bind(this));
+        }
     }
 
     render() {

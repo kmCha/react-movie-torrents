@@ -185,7 +185,7 @@ class RegistrationForm extends React.Component {
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
                     {submitBtn}
-                    <a className="btn-login" href="javascript: void 0;" onClick={() => {onChangeForm('login')}}>已有账号，立即登录</a>
+                    <a className="btn-login" href="javascript: void 0;" onClick={() => { onChangeForm('login') }}>已有账号，立即登录</a>
                 </Form.Item>
             </Form>
         );

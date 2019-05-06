@@ -20,7 +20,7 @@ export default class MovieDetail extends React.Component {
 
 	componentWillMount() {
 		var { id } = this.props.item;
-		getTorrents({id}).then(res => {
+		getTorrents({ id }).then(res => {
 			var { code, body } = res.data;
 			if (code > 0) {
 				this.setState({
@@ -55,7 +55,7 @@ export default class MovieDetail extends React.Component {
 			torrentList = downloadList.map((downloadItem, index) => {
 				return (
 					<p className="movie-download-item" key={index}>
-					<a href={downloadItem.href} target="_blank">{downloadItem.title}</a>
+						<a href={downloadItem.href} target="_blank">{downloadItem.title}</a>
 					</p>
 				)
 			})
@@ -65,39 +65,39 @@ export default class MovieDetail extends React.Component {
 
 		return (
 			<Drawer
-			title={item.title}
-			width="800"
-			placement="right"
-			onClose={onDetailClose}
-			visible={visible}>
-			<div className="info-wrap">
-				<div className="info-group">
-					<span className="title">豆瓣评分：</span>
-					<span className="content">{item.doubanScore}<Rate disabled value={item.doubanScore / 2} /></span>
+				title={item.title}
+				width="800"
+				placement="right"
+				onClose={onDetailClose}
+				visible={visible}>
+				<div className="info-wrap">
+					<div className="info-group">
+						<span className="title">豆瓣评分：</span>
+						<span className="content">{item.doubanScore}<Rate disabled value={item.doubanScore / 2} /></span>
+					</div>
+					<div className="info-group">
+						<span className="title">豆瓣链接：</span>
+						<span className="content">{doubanLink}</span>
+					</div>
+					<div className="info-group">
+						<span className="title">上映日期：</span>
+						<span className="content">{item.releaseDate}</span>
+					</div>
+					<div className="info-group">
+						<span className="title">大陆上映：</span>
+						<span className="content">{item.releaseInChina ? '是' : '否'}</span>
+					</div>
+					<div className="info-group">
+						<span className="title">分类标签：</span>
+						<span className="content">{(item.tags || []).join(',')}</span>
+					</div>
 				</div>
-				<div className="info-group">
-					<span className="title">豆瓣链接：</span>
-					<span className="content">{doubanLink}</span>
-				</div>
-				<div className="info-group">
-					<span className="title">上映日期：</span>
-					<span className="content">{item.releaseDate}</span>
-				</div>
-				<div className="info-group">
-					<span className="title">大陆上映：</span>
-					<span className="content">{item.releaseInChina ? '是' : '否'}</span>
-				</div>
-				<div className="info-group">
-					<span className="title">分类标签：</span>
-					<span className="content">{(item.tags || []).join(',')}</span>
-				</div>
-			</div>
-			{
-				torrentTitle
-			}
-			{
-				torrentList
-			}
+				{
+					torrentTitle
+				}
+				{
+					torrentList
+				}
 			</Drawer>
 		)
 	}

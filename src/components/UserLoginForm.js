@@ -106,8 +106,8 @@ class NormalLoginForm extends React.Component {
         </Button>;
         if (loading) {
             submitBtn = <Button type="primary" disabled className="login-form-button">
-            <Icon type="loading" />
-        </Button>;
+                <Icon type="loading" />
+            </Button>;
 
         }
         return (
@@ -143,7 +143,7 @@ class NormalLoginForm extends React.Component {
                     )}
                     <a className="login-form-forgot" href="">忘记密码？</a>
                     {submitBtn}
-                    Or <a onClick={() => {onChangeForm('signUp')}} href="javascript: void 0;">立即注册</a>
+                    Or <a onClick={() => { onChangeForm('signUp') }} href="javascript: void 0;">立即注册</a>
                 </Form.Item>
             </Form>
         );

@@ -84,7 +84,7 @@ class UserLogin extends React.Component {
         } = this.state
 
         var comp = <div className="btn-login" onClick={this.setModalVisible.bind(this, true)}>
-                        登录/注册
+            登录/注册
                     </div>
 
         if (loading) {
@@ -92,7 +92,7 @@ class UserLogin extends React.Component {
         } else if (userInfo) {
             comp = <div>
                 <div className="userInfo-wrap">
-                    <div className="user-avatar" style={{backgroundImage: `url(${require('../img/avatar.png')})`}}></div>
+                    <div className="user-avatar" style={{ backgroundImage: `url(${require('../img/avatar.png')})` }}></div>
                     <div className="username"><Icon type="user" />{userInfo.userName}</div>
                 </div>
                 <a className="btn-logout" href="javascript: void 0;" onClick={this.logOut.bind(this)}><Icon type="export" />登出</a>
@@ -100,7 +100,7 @@ class UserLogin extends React.Component {
         } else if (userInfoGitHub) {
             comp = <div>
                 <a className="userInfo-wrap" href={userInfoGitHub.html_url}>
-                    <div className="user-avatar" style={{backgroundImage: `url('${userInfoGitHub.avatar_url}')`}}></div>
+                    <div className="user-avatar" style={{ backgroundImage: `url('${userInfoGitHub.avatar_url}')` }}></div>
                     <div className="username"><Icon type="user" />{userInfoGitHub.login}</div>
                 </a>
                 <a className="btn-logout" href="javascript: void 0;" onClick={this.logOut.bind(this)}><Icon type="export" />登出</a>
@@ -117,7 +117,7 @@ class UserLogin extends React.Component {
                     visible={this.state.modalVisible}
                     onOk={() => this.setModalVisible(false)}
                     onCancel={() => this.setModalVisible(false)}
-                    >
+                >
                     <UserLoginModal onLoginSuccess={this.onLoginSuccess.bind(this)}></UserLoginModal>
                 </Modal>
             </div>

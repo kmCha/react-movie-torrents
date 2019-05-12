@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
 
-function encryptPassword(str, salt) {
+export function encryptPassword(str, salt) {
     var salt = salt || CryptoJS.lib.WordArray.random(256 / 8);
     var key256Bits = CryptoJS.PBKDF2(str, salt + '', {
         keySize: 256 / 32
@@ -11,6 +11,6 @@ function encryptPassword(str, salt) {
     }
 }
 
-export {
-    encryptPassword
+export function getQueryStr (key) {  
+    return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
 }

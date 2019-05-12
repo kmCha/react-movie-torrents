@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+import { getQueryStr } from './utils.js';
 
 var apiHost = '//api.chamajiuxi.com'
 
@@ -13,6 +14,12 @@ var instance = axios.create({
 
 export {
     apiHost
+}
+
+export async function githubAuth() {
+    return await instance.post('/auth/github', {
+        code: getQueryStr('code')
+    })
 }
 
 // 获取用户盐

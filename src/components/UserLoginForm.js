@@ -46,14 +46,18 @@ class NormalLoginForm extends React.Component {
                                 this.props.onLoginSuccess();
                             } else {
                                 message.error(msg);
+                                this.setState({
+                                    captchaPass: false
+                                })
                             }
                             this.setState({
                                 loading: false
                             })
                         }).catch(e => {
-                            message.error(networkErrorMsg)
+                            message.error(networkErrorMsg);
                             this.setState({
-                                loading: false
+                                loading: false,
+                                captchaPass: false
                             })
                         })
                     } else {
@@ -87,7 +91,7 @@ class NormalLoginForm extends React.Component {
     componentDidMount() {
         var element = document.getElementById('normal_login_captcha');
         if (element) {
-            new TencentCaptcha(element, txCaptchaId, this.onCaptchaSuccess.bind(this));
+            captchaObj = new TencentCaptcha(element, txCaptchaId, this.onCaptchaSuccess.bind(this));
         }
     }
 

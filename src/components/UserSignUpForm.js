@@ -44,6 +44,9 @@ class RegistrationForm extends React.Component {
                         });
                     } else {
                         message.error(msg);
+                        this.setState({
+                            captchaPass: false
+                        })
                     }
                     this.setState({
                         loading: false
@@ -51,6 +54,7 @@ class RegistrationForm extends React.Component {
                 }).catch(e => {
                     message.error(networkErrorMsg);
                     this.setState({
+                        captchaPass: false,
                         loading: false
                     })
                 })

@@ -1,15 +1,18 @@
 import axios from 'axios';
-import { getQueryStr } from './utils.js';
+import { getQueryStr, getCookie } from './utils.js';
 
 var apiHost = '//api.chamajiuxi.com'
 
 if (__DEBUG) {
-    apiHost = 'http://localhost:3000'
+    apiHost = 'http://localhost:7001'
 }
 
 var instance = axios.create({
     baseURL: apiHost,
-    withCredentials: true
+    withCredentials: true,
+    headers: {
+        'x-csrf-token': getCookie('csrfToken')
+    },
 })
 
 export {
